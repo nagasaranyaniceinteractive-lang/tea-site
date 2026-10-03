@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SARANYA — Rooted in the Hills</title>
+<meta name="description" content="A single bag. Ancient wisdom inside. Saranya — a luxury Indian tea ritual, blend by blend." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="googlebot" content="noindex, nofollow" />
+<meta name="theme-color" content="#030303" />
+<link rel="icon" type="image/png" href="logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   TEA — base
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #030303;
+  --amber: #f59e0b;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html, body { background: var(--bg); }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.loading { overflow: hidden; height: 100vh; }
+
+::selection { background: rgba(245, 158, 11, 0.25); color: #fff; }
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ============================================================
+   Loading screen
+   ============================================================ */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+#loader.hidden { opacity: 0; pointer-events: none; }
+
+.loader-logo {
+  height: clamp(56px, 12vw, 84px);
+  width: auto;
+  max-width: 80vw;
+  object-fit: contain;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 35px rgba(245, 158, 11, 0.45));
+}
+.loader-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 7vw, 48px);
+  font-weight: 500;
+  color: var(--amber);
+  letter-spacing: 0.22em;
+  padding-left: 0.22em;
+}
+
+.loader-bar-track {
+  width: 200px;
+  height: 2px;
+  margin-top: 32px;
+  background: rgba(245, 158, 11, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--amber);
+  transition: width 0.3s ease;
+}
+
+.loader-note {
+  margin-top: 18px;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================
+   Fixed header
+   ============================================================ */
+#site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  min-height: 84px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 34px;
+  background: linear-gradient(180deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.35) 75%, transparent 100%);
+  transition: min-height 0.3s ease, padding 0.3s ease;
+}
+.header-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+.header-brand:hover { opacity: 0.95; }
+.site-logo {
+  width: 230px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.25));
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+.header-brand:hover .site-logo {
+  transform: scale(1.03);
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 30px rgba(245, 158, 11, 0.45));
+}
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.header-shop {
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.35s var(--ease);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.8);
+}
+.header-shop:hover { color: var(--amber); }
+.header-bag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+.header-bag:hover { color: #fff; }
+.bag-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--amber);
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bag-pop {
+  transform: scale(1.35);
+}
+
+/* ============================================================
+   Scroll progress bar (right edge)
+   ============================================================ */
+#progress-track {
+  position: fixed;
+  top: 0; right: 0;
+  width: 2px;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 100;
+  background: rgba(245, 158, 11, 0.15);
+}
+#progress-fill {
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 158, 11, 0.8);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* ============================================================
+   Hero — scroll-driven video
+   ============================================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;   /* large viewport height — stays full when the mobile
+                       address bar collapses (no bottom black gap) */
+  overflow: hidden;
+  background: #000;
+}
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+}
+
+/* hero text overlays */
+.overlay {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 1.16;
+  max-width: 42%;
+}
+.ov1 {
+  top: 11%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 92%;
+}
+.ov2 { left: 8%; bottom: 15%; text-align: left; }
+.ov3 { right: 8%; top: 50%; transform: translateY(-50%); text-align: right; }
+.ov4 { left: 8%;  top: 50%; transform: translateY(-50%); text-align: left; }
+.ov5 { left: 8%;  top: 16%; text-align: left; }
+
+.title-text {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(40px, 9vw, 120px);
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  white-space: nowrap;
+  color: rgba(245, 158, 11, 0.9);
+  text-shadow: 0 2px 50px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+}
+
+.oline {
+  display: block;
+  white-space: nowrap;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(24px, 4.6vw, 42px);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.95), 0 0 70px rgba(0, 0, 0, 0.8);
+}
+.word { display: inline-block; opacity: 0; }
+
+/* hero brand mark — Saranya, shown centered just below the tea bag on the
+   opening frame; fades out the instant the hero starts scrolling */
+.brand-mark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 83%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.brand-word {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(38px, 6vw, 84px);
+  letter-spacing: 0.18em;
+  padding-left: 0.18em;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #ffffff 0%, #fbd38d 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #fbd38d;
+  filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 50px rgba(245, 158, 11, 0.4));
+}
+.brand-sub {
+  display: block;
+  margin-top: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: rgba(245, 158, 11, 0.7);
+  text-transform: uppercase;
+  animation: pulseSub 2.2s infinite ease-in-out;
+}
+@keyframes pulseSub {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(3px); }
+}
+
+/* ============================================================
+   Product collection
+   ============================================================ */
+.collection {
+  position: relative;
+  padding: 150px 34px 170px;
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 0%, rgba(245, 158, 11, 0.06), transparent 72%),
+    var(--bg);
+  overflow-x: clip;
+}
+.collection-head { text-align: center; margin-bottom: 78px; }
+.collection-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  color: var(--amber);
+}
+.collection-title {
+  margin-top: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(30px, 5vw, 46px);
+  color: #fff;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 26px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3),
+              0 24px 50px -34px rgba(0, 0, 0, 0.9);
+  will-change: transform, opacity, filter;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.8s ease,
+              filter 0.9s ease,
+              box-shadow 0.4s var(--ease);
+}
+
+/* ============================================================
+   Scroll-triggered entrance animations for collection items
+   ============================================================ */
+/* 1. First collection item: enters from LEFT (-120px), opacity 0, blur 10px */
+.collection:not(.is-visible) .card:nth-child(1) {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(-120px, 0, 0);
+  pointer-events: none;
+}
+.collection.is-visible .card:nth-child(1) {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0ms;
+}
+
+/* 2. Middle collection item: subtle centered fade/scale (scale 0.94, opacity 0, blur 8px) */
+.collection:not(.is-visible) .card:nth-child(2) {
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(0.94);
+  pointer-events: none;
+}
+.collection.is-visible .card:nth-child(2) {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  transition-delay: 120ms;
+}
+
+/* 3. Third collection item: enters from RIGHT (+120px), opacity 0, blur 10px */
+.collection:not(.is-visible) .card:nth-child(3) {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(120px, 0, 0);
+  pointer-events: none;
+}
+.collection.is-visible .card:nth-child(3) {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  transition-delay: 240ms;
+}
+
+/* Tablet: reduce horizontal movement distance slightly */
+@media (max-width: 1024px) and (min-width: 601px) {
+  .collection:not(.is-visible) .card:nth-child(1) {
+    transform: translate3d(-80px, 0, 0);
+    filter: blur(8px);
+  }
+  .collection:not(.is-visible) .card:nth-child(3) {
+    transform: translate3d(80px, 0, 0);
+    filter: blur(8px);
+  }
+}
+
+/* Mobile: reduce translate distance to 50-60px, subtle blur, avoid horizontal overflow */
+@media (max-width: 600px) {
+  .collection {
+    overflow-x: hidden;
+  }
+  .collection:not(.is-visible) .card:nth-child(1) {
+    transform: translate3d(-60px, 0, 0);
+    filter: blur(6px);
+  }
+  .collection:not(.is-visible) .card:nth-child(2) {
+    transform: scale(0.96);
+    filter: blur(5px);
+  }
+  .collection:not(.is-visible) .card:nth-child(3) {
+    transform: translate3d(60px, 0, 0);
+    filter: blur(6px);
+  }
+}
+.card-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease);
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 32px 34px 34px;
+}
+.card-dawn  { background: linear-gradient(160deg, #1a0f0a, #2a1810); }
+.card-dusk  { background: linear-gradient(160deg, #0a0a0a, #1a0a00); }
+.card-night { background: linear-gradient(160deg, #050510, #0a0a1a); }
+
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 40px);
+  letter-spacing: 0.16em;
+  padding-left: 0.16em;
+  color: var(--amber);
+}
+.card-night .card-name { color: #fff; }
+
+.card-blend {
+  margin-top: 4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.card-ingredients {
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.card-foot { margin-top: auto; padding-top: 34px; }
+.card-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.card-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3vw, 32px);
+  color: #fff;
+}
+.card-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--amber);
+  background: transparent;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  border-radius: 6px;
+  padding: 12px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+              border-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
+              transform 0.15s ease;
+}
+.card-btn:hover {
+  background: var(--amber);
+  color: #030303;
+  border-color: var(--amber);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+}
+.card-btn:active {
+  transform: scale(0.97);
+}
+.card-meta {
+  display: block;
+  margin-top: 22px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.3);
+}
+.card-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  z-index: 3;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--amber);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 100px;
+  padding: 5px 10px;
+}
+
+/* ============================================================
+   Newsletter
+   ============================================================ */
+.newsletter {
+  position: relative;
+  padding: 168px 34px;
+  text-align: center;
+  background-image:
+    linear-gradient(to bottom,
+      rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.60) 35%,
+      rgba(3, 3, 3, 0.65) 65%, rgba(3, 3, 3, 0.95) 100%),
+    url('newsletter-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.newsletter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(34px, 6vw, 52px);
+  color: #fff;
+}
+.newsletter-sub {
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.45);
+}
+.newsletter-form {
+  margin-top: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.newsletter-input {
+  width: min(320px, 78vw);
+  padding: 12px 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #fff;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.55);
+  outline: none;
+  transition: border-color 0.35s var(--ease);
+}
+.newsletter-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+.newsletter-input:focus { border-bottom-color: var(--amber); }
+.newsletter-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--amber);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 2px;
+  transition: opacity 0.3s ease;
+}
+.newsletter-btn span { border-bottom: 1px solid transparent; transition: border-color 0.3s ease; }
+
+.newsletter-success {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--amber);
+  margin-top: 24px;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   Ritual Toast
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  background: rgba(14, 14, 14, 0.94);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 10px var(--amber);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 52px 34px;
+  background: var(--bg);
+  border-top: 1px solid rgba(245, 158, 11, 0.15);
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.footer-logo {
+  width: 230px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.9));
+  transition: opacity 0.3s ease, transform 0.35s ease, filter 0.35s ease;
+}
+.footer-brand:hover .footer-logo {
+  opacity: 1;
+  transform: scale(1.03);
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.4));
+}
+.footer-center {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ============================================================
+   Animated 60px Social Media Icons
+   ============================================================ */
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-icon-btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 14, 14, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease,
+              color 0.4s ease,
+              background 0.4s ease;
+  will-change: transform;
+}
+
+/* Ambient floating animation */
+.social-icon-btn:nth-child(1) { animation: socialFloat 4s ease-in-out infinite; }
+.social-icon-btn:nth-child(2) { animation: socialFloat 4s ease-in-out infinite 0.6s; }
+.social-icon-btn:nth-child(3) { animation: socialFloat 4s ease-in-out infinite 1.2s; }
+
+@keyframes socialFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Glow ring shimmer layer */
+.social-icon-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, rgba(245, 158, 11, 0.85), transparent, rgba(245, 158, 11, 0.85), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  animation: spinRing 4s linear infinite;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.social-icon-btn::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  background: #090909;
+  z-index: 1;
+  transition: background 0.4s ease;
+}
+
+.social-icon-btn svg {
+  position: relative;
+  z-index: 2;
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), fill 0.3s ease;
+}
+
+/* Hover effects */
+.social-icon-btn:hover {
+  transform: translateY(-8px) scale(1.1);
+  border-color: var(--amber);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85), 0 0 25px rgba(245, 158, 11, 0.5);
+}
+
+.social-icon-btn:hover::before {
+  opacity: 1;
+}
+
+.social-icon-btn:hover::after {
+  background: radial-gradient(circle at 35% 35%, rgba(245, 158, 11, 0.22), #070707);
+}
+
+.social-icon-btn:hover svg {
+  transform: scale(1.15) rotate(6deg);
+}
+
+.social-icon-btn.instagram:hover svg {
+  fill: #f59e0b;
+}
+
+.social-icon-btn.youtube:hover svg {
+  fill: #ff4d4d;
+}
+
+.social-icon-btn.x-twitter:hover svg {
+  fill: #ffffff;
+}
+
+.social-icon-btn:active {
+  transform: scale(0.96) translateY(-2px);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (min-width: 769px) {
+  .newsletter { background-attachment: fixed; }
+}
+@media (max-width: 768px) {
+  #site-header { padding: 0 20px; }
+  .collection { padding: 110px 22px 120px; }
+  .newsletter { padding: 120px 22px; }
+  .overlay { max-width: 84%; }
+  .ov2 { left: 7%; bottom: 12%; }
+  .ov3 { right: 7%; }
+  .ov4 { left: 7%; }
+  .ov5 { left: 7%; }
+}
+@media (max-width: 600px) {
+  .title-text { letter-spacing: 0.16em; padding-left: 0.16em; }
+  /* let full-sentence overlay lines wrap instead of clipping at the edge */
+  .oline { white-space: normal; }
+
+  /* product cards: stack price + button so the CTA goes full-width
+     (no overflow on narrow cards, and a far bigger tap target) */
+  .card-body { padding: 26px 24px 30px; }
+  .card-price-row { flex-direction: column; align-items: stretch; }
+  .card-btn { padding: 16px; }
+
+  .newsletter-btn { padding: 14px 10px; }
+
+  /* enlarge header link hit areas to ~44px for comfortable tapping */
+  .header-brand,
+  .header-shop { display: inline-flex; align-items: center; min-height: 44px; }
+}
+@media (max-width: 768px) {
+  #site-header { padding: 8px 18px; min-height: 72px; }
+  .site-footer { flex-direction: column; text-align: center; gap: 24px; padding: 48px 20px; }
+  .site-logo { width: min(230px, 52vw); }
+  .footer-logo { width: min(230px, 68vw); }
+}
+@media (max-width: 400px) {
+  /* keep hero overlay text clear of the screen edges on tiny phones */
+  .overlay { max-width: 90%; }
+  .ov2, .ov4, .ov5 { left: 5%; }
+  .ov3 { right: 5%; }
+}
+
+/* hover effects — applied only on devices with a real hover-capable pointer,
+   so they never get "stuck" after a tap on touchscreens */
+@media (hover: hover) {
+  .collection.is-visible .card:hover {
+    transform: translateY(-12px);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    transition-delay: 0s;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.6),
+                0 36px 64px -28px rgba(0, 0, 0, 0.9),
+                0 0 60px -14px rgba(245, 158, 11, 0.28);
+  }
+  .card:hover .card-media { transform: scale(1.045); }
+  .header-shop:hover { color: var(--amber); }
+  .card-btn:hover {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: #1a0f0a;
+  }
+  .newsletter-btn:hover span { border-bottom-color: var(--amber); }
+  .footer-links a:hover { text-decoration: underline; color: var(--amber); }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<!-- ===================== Loading screen ===================== -->
+<div id="loader">
+  <img src="logo.png" alt="Saranya Premium Tea Co." class="loader-logo" />
+  <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderFill"></div></div>
+  <div class="loader-note">Preparing your ritual...</div>
+</div>
+
+<!-- ===================== Fixed header ===================== -->
+<header id="site-header">
+  <a class="header-brand" href="#top" aria-label="Saranya Home">
+    <img src="logo.png" alt="Saranya Premium Tea Co." class="site-logo" />
+  </a>
+  <div class="header-nav">
+    <a class="header-shop" id="shopLink">COLLECTION</a>
+    <div class="header-bag" id="ritualBag" title="Ritual Bag">
+      <span class="bag-label">RITUAL</span>
+      <span class="bag-count" id="bagCount">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== Scroll progress bar ===================== -->
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<!-- ===================== Hero ===================== -->
+<section class="hero" id="top">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <div class="brand-mark" id="ovBrand">
+    <span class="brand-word">Saranya</span>
+    <span class="brand-sub">SCROLL TO ENTER RITUAL &darr;</span>
+  </div>
+
+  <div class="overlay ov1" id="ov1">
+    <span class="title-text">TEA</span>
+  </div>
+
+  <div class="overlay ov2" id="ov2">
+    <span class="oline" data-split>A single bag.</span>
+    <span class="oline" data-split>Ancient wisdom inside.</span>
+  </div>
+
+  <div class="overlay ov3" id="ov3">
+    <span class="oline" data-split>Rose, cardamom, tulsi.</span>
+    <span class="oline" data-split>Every leaf, awake.</span>
+  </div>
+
+  <div class="overlay ov4" id="ov4">
+    <span class="oline" data-split>Steeped slow.</span>
+    <span class="oline" data-split>Nothing is hurried here.</span>
+  </div>
+
+  <div class="overlay ov5" id="ov5">
+    <span class="oline" data-split>Warm in your hands.</span>
+    <span class="oline" data-split>The ritual is yours.</span>
+  </div>
+</section>
+
+<!-- ===================== Product collection ===================== -->
+<section class="collection" id="collection">
+  <div class="collection-head">
+    <span class="collection-eyebrow">The Collection</span>
+    <h2 class="collection-title">Choose your hour.</h2>
+  </div>
+
+  <div class="cards">
+    <article class="card card-dawn">
+      <img class="card-media" src="dawn.jpg" alt="DAWN — Morning Awakening Blend" loading="lazy" decoding="async" />
+      <div class="card-body">
+        <span class="card-name">DAWN</span>
+        <span class="card-blend">Morning Awakening Blend</span>
+        <p class="card-ingredients">Tulsi. Rose. Cardamom. Green tea.</p>
+        <div class="card-foot">
+          <div class="card-price-row">
+            <span class="card-price">₹ 890</span>
+            <button class="card-btn" type="button">Add to Ritual</button>
+          </div>
+          <span class="card-meta">15 BAGS · ORGANIC · ASSAM ORIGIN</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card card-dusk">
+      <span class="card-badge">Bestseller</span>
+      <img class="card-media" src="dusk.jpg" alt="DUSK — Evening Unwind Blend" loading="lazy" decoding="async" />
+      <div class="card-body">
+        <span class="card-name">DUSK</span>
+        <span class="card-blend">Evening Unwind Blend</span>
+        <p class="card-ingredients">Chamomile. Rose. Cardamom. Black tea.</p>
+        <div class="card-foot">
+          <div class="card-price-row">
+            <span class="card-price">₹ 890</span>
+            <button class="card-btn" type="button">Add to Ritual</button>
+          </div>
+          <span class="card-meta">15 BAGS · ORGANIC · ASSAM ORIGIN</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card card-night">
+      <img class="card-media" src="night.jpg" alt="NIGHT — Deep Rest Blend" loading="lazy" decoding="async" />
+      <div class="card-body">
+        <span class="card-name">NIGHT</span>
+        <span class="card-blend">Deep Rest Blend</span>
+        <p class="card-ingredients">Ashwagandha. Rose. Lavender. White tea.</p>
+        <div class="card-foot">
+          <div class="card-price-row">
+            <span class="card-price">₹ 950</span>
+            <button class="card-btn" type="button">Add to Ritual</button>
+          </div>
+          <span class="card-meta">15 BAGS · ORGANIC · ASSAM ORIGIN</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== Newsletter ===================== -->
+<section class="newsletter">
+  <h2 class="newsletter-title nl-reveal">Join the ceremony.</h2>
+  <p class="newsletter-sub nl-reveal">Be the first to know. No noise. Only ritual.</p>
+  <form class="newsletter-form nl-reveal" id="nlForm">
+    <input class="newsletter-input" type="email" placeholder="Your email" aria-label="Your email" />
+    <button class="newsletter-btn" type="submit"><span>BEGIN&nbsp;&rarr;</span></button>
+  </form>
+</section>
+
+<!-- ===================== Footer ===================== -->
+<footer class="site-footer">
+  <a href="#top" class="footer-brand" aria-label="Saranya Home">
+    <img src="logo.png" alt="Saranya Premium Tea Co." class="footer-logo" />
+  </a>
+  <span class="footer-center">© 2026 Saranya Premium Tea Co. Rooted in the hills.</span>
+  <div class="footer-socials">
+    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn instagram" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+    </a>
+    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn youtube" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+    </a>
+    <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn x-twitter" aria-label="X / Twitter">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<!-- ===================== Ritual Toast ===================== -->
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<!-- ===================== Scripts ===================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- scroll restoration: always start from hanging bag (frame 0) ---------- */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+  window.scrollTo(0, 0);
+  window.addEventListener('beforeunload', function () {
+    window.scrollTo(0, 0);
+  });
+
+  /* ---------- config ---------- */
+  var TOTAL_FRAMES = 227;
+  function framePath(n) {
+    return 'frames/frame_' + String(n).padStart(4, '0') + '.jpg';
+  }
+
+  /* ---------- elements ---------- */
+  var canvas     = document.getElementById('hero-canvas');
+  var ctx        = canvas.getContext('2d', { alpha: false });
+  var loader     = document.getElementById('loader');
+  var loaderFill = document.getElementById('loaderFill');
+  var lenis      = null;
+
+  /* ---------- frame set (every 2nd frame on small screens) ---------- */
+  var lightMode = window.matchMedia('(max-width: 768px)').matches;
+  var stepSize  = lightMode ? 2 : 1;
+  var frameIndices = [];
+  for (var n = 1; n <= TOTAL_FRAMES; n += stepSize) frameIndices.push(n);
+  var N = frameIndices.length;
+
+  var frames  = new Array(N);
+  var settled = 0;
+
+  /* ---------- canvas sizing ---------- */
+  var cw = 0, ch = 0;
+  function sizeCanvas() {
+    /* The backing store must match the canvas's on-screen box or the frame
+       gets stretched. Width = live viewport. Height is read from
+       #progress-track — also 100lvh, but (unlike the pinned .hero, or the
+       canvas inside it, whose size ScrollTrigger locks) never resized by
+       ScrollTrigger, so it always reports the true large-viewport height.
+       window.innerHeight can't be used either — it shrinks with the mobile
+       address bar. */
+    var dpr   = Math.min(window.devicePixelRatio || 1, 2);
+    var track = document.getElementById('progress-track');
+    var w = document.documentElement.clientWidth || window.innerWidth;
+    var h = (track && track.clientHeight) || window.innerHeight;
+    cw = Math.max(1, Math.round(w * dpr));
+    ch = Math.max(1, Math.round(h * dpr));
+    canvas.width  = cw;
+    canvas.height = ch;
+  }
+
+  /* ---------- drawing (cover-fit, draw-on-change) ---------- */
+  var curFrame = -1;
+
+  function paint(i) {
+    var bmp = frames[i];
+    if (!bmp) {                                  /* nearest-ready fallback */
+      for (var d = 1; d < N; d++) {
+        if (i - d >= 0 && frames[i - d]) { bmp = frames[i - d]; break; }
+        if (i + d <  N && frames[i + d]) { bmp = frames[i + d]; break; }
+      }
+    }
+    if (!bmp) return;
+    var iw = bmp.naturalWidth  || bmp.width;
+    var ih = bmp.naturalHeight || bmp.height;
+    var scale = Math.max(cw / iw, ch / ih);
+    var dw = iw * scale, dh = ih * scale;
+    ctx.drawImage(bmp, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+
+  function render(f) {
+    var i = Math.round(f);
+    if (i < 0) i = 0;
+    else if (i > N - 1) i = N - 1;
+    if (i === curFrame) return;
+    curFrame = i;
+    paint(i);
+  }
+
+  function repaint() { paint(curFrame < 0 ? 0 : curFrame); }
+
+  /* ---------- frame loading ---------- */
+  function decode(blob) {
+    if (window.createImageBitmap) return createImageBitmap(blob);
+    return new Promise(function (res, rej) {
+      var img = new Image();
+      img.onload  = function () { res(img); };
+      img.onerror = rej;
+      img.src = URL.createObjectURL(blob);
+    });
+  }
+
+  function loadFrame(slot) {
+    return fetch(framePath(frameIndices[slot]))
+      .then(function (r) { if (!r.ok) throw new Error('frame'); return r.blob(); })
+      .then(decode)
+      .then(function (bmp) { frames[slot] = bmp; })
+      .catch(function () { frames[slot] = null; })
+      .then(function () {
+        settled++;
+        loaderFill.style.width = (settled / N * 100).toFixed(2) + '%';
+      });
+  }
+
+  /* ---------- word splitting for overlays ---------- */
+  function splitWords() {
+    var nodes = document.querySelectorAll('[data-split]');
+    Array.prototype.forEach.call(nodes, function (el) {
+      var words = el.textContent.trim().split(/\s+/);
+      el.textContent = '';
+      words.forEach(function (w, i) {
+        var s = document.createElement('span');
+        s.className = 'word';
+        s.textContent = w;
+        el.appendChild(s);
+        if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+      });
+    });
+  }
+
+  /* ---------- scroll-driven animation ---------- */
+  function buildScroll() {
+    gsap.registerPlugin(ScrollTrigger);
+    if (ScrollTrigger.clearScrollMemory) {
+      ScrollTrigger.clearScrollMemory('manual');
+    }
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    /* smooth scrolling — Lenis, driven by GSAP's ticker and synced to
+       ScrollTrigger. Keeps real native scroll, so the pinned hero and the
+       fixed header / progress bar / loader keep working. Chrome + Safari. */
+    if (window.Lenis) {
+      lenis = new Lenis({ lerp: 0.1 });
+      window.lenis = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      lenis.stop();   /* stay locked through the loader fade */
+      lenis.scrollTo(0, { immediate: true });
+    }
+
+    var playhead = { f: 0 };
+
+    /* one master timeline: video playback + every text overlay, scrubbed by a
+       single pinned ScrollTrigger. The scroll distance is shorter on phones so
+       the hero isn't an endless swipe; all timeline beats live in timeline
+       units (0-100), so they auto-rescale to whatever distance is used. */
+    var heroEnd = lightMode ? '+=320%' : '+=700%';
+    var master = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: heroEnd,
+        pin: true,
+        scrub: 0.4,
+        invalidateOnRefresh: true
+      }
+    });
+
+    /* frame playback across the full hero (timeline units = % of hero) */
+    master.to(playhead, {
+      f: N - 1,
+      ease: 'none',
+      duration: 100,
+      onUpdate: function () { render(playhead.f); }
+    }, 0);
+
+    /* overlay helpers */
+    function overlayIn(sel, at, stg) {
+      master.fromTo(sel + ' .word',
+        { autoAlpha: 0, yPercent: 60 },
+        { autoAlpha: 1, yPercent: 0, ease: 'power2.out', duration: 1.6, stagger: stg },
+        at);
+    }
+    function overlayOut(sel, at) {
+      master.to(sel, { autoAlpha: 0, ease: 'power1.in', duration: 3 }, at);
+    }
+
+    /* ovBrand — Saranya brand mark; visible on the opening frame, fades
+       out the instant the hero starts scrolling (gone by ~4% of hero) */
+    master.to('#ovBrand', { autoAlpha: 0, ease: 'power2.out', duration: 4 }, 0);
+
+    /* ov1 — TEA (in 5%, out 15%) */
+    master.fromTo('#ov1 .title-text',
+      { autoAlpha: 0, yPercent: 30 },
+      { autoAlpha: 1, yPercent: 0, ease: 'power2.out', duration: 2.4 }, 5);
+    master.to('#ov1', { autoAlpha: 0, ease: 'power1.in', duration: 2.2 }, 15);
+
+    /* ov2..ov5 — word-by-word, synced to the film's beats */
+    overlayIn('#ov2', 18, 1.3); overlayOut('#ov2', 31);   /* the single bag   */
+    overlayIn('#ov3', 40, 1.3); overlayOut('#ov3', 52);   /* the burst        */
+    overlayIn('#ov4', 60, 1.3); overlayOut('#ov4', 72);   /* the steeping     */
+    overlayIn('#ov5', 84, 1.0); overlayOut('#ov5', 94);   /* held in hands    */
+
+    /* right-edge scroll progress */
+    gsap.fromTo('#progress-fill',
+      { scaleY: 0 },
+      { scaleY: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
+
+    /* Collection scroll-triggered entrance animations */
+    var collectionEl = document.getElementById('collection');
+    if (collectionEl) {
+      if (window.ScrollTrigger) {
+        ScrollTrigger.create({
+          trigger: collectionEl,
+          start: 'top 78%',
+          once: true,
+          onEnter: function () {
+            collectionEl.classList.add('is-visible');
+          }
+        });
+      } else if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              collectionEl.classList.add('is-visible');
+              obs.unobserve(collectionEl);
+            }
+          });
+        }, { threshold: 0.15 });
+        obs.observe(collectionEl);
+      } else {
+        collectionEl.classList.add('is-visible');
+      }
+    }
+
+    /* newsletter reveal */
+    gsap.from('.nl-reveal', {
+      autoAlpha: 0, y: 28, duration: 1, ease: 'power2.out', stagger: 0.12,
+      scrollTrigger: { trigger: '.newsletter', start: 'top 70%' }
+    });
+  }
+
+  /* ---------- boot ---------- */
+  function init() {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    document.body.classList.add('loading');
+    sizeCanvas();
+    splitWords();
+
+    var fontsReady = (document.fonts && document.fonts.ready)
+      ? document.fonts.ready : Promise.resolve();
+
+    var jobs = [];
+    for (var s = 0; s < N; s++) jobs.push(loadFrame(s));
+
+    /* preload the logo, newsletter background + product card images */
+    ['logo.png', 'newsletter-bg.jpg', 'dawn.jpg', 'dusk.jpg', 'night.jpg'].forEach(function (src) {
+      jobs.push(new Promise(function (res) {
+        var img = new Image();
+        img.onload = img.onerror = function () { res(); };
+        img.src = src;
+      }));
+    });
+
+    Promise.all(jobs)
+      .then(function () { return fontsReady; })
+      .then(function () {
+        window.scrollTo(0, 0);
+        sizeCanvas();
+        render(0);
+        buildScroll();
+        if (lenis) lenis.scrollTo(0, { immediate: true });
+
+        loader.classList.add('hidden');
+        setTimeout(function () {
+          document.body.classList.remove('loading');
+          loader.style.display = 'none';
+          window.scrollTo(0, 0);
+          if (lenis) {
+            lenis.scrollTo(0, { immediate: true });
+            lenis.start();
+          }
+          requestAnimationFrame(function () {
+            ScrollTrigger.refresh();
+            render(0);
+          });
+        }, 850);
+      });
+  }
+
+  /* ---------- resize (debounced) ---------- */
+  /* On phones, scrolling shows/hides the address bar, firing 'resize' with a
+     height-only change. Refreshing ScrollTrigger on those re-pins the hero and
+     causes a visible jump — so on mobile we only react to real width changes
+     (orientation / true resize). The hero is 100svh, so ignoring the address
+     bar leaves no gap. */
+  var resizeTimer, lastW = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (lightMode && window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      sizeCanvas();
+      repaint();
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    }, 160);
+  });
+
+  /* ---------- header SHOP jump + ritual interaction ---------- */
+  var shop = document.getElementById('shopLink');
+  if (shop) shop.addEventListener('click', function (e) {
+    e.preventDefault();
+    var c = document.getElementById('collection');
+    if (!c) return;
+    if (lenis) lenis.scrollTo(c, { duration: 1.5 });
+    else window.scrollTo(0, c.getBoundingClientRect().top + window.pageYOffset);
+  });
+
+  var ritualBag = document.getElementById('ritualBag');
+  if (ritualBag) ritualBag.addEventListener('click', function () {
+    var c = document.getElementById('collection');
+    if (!c) return;
+    if (lenis) lenis.scrollTo(c, { duration: 1.5 });
+    else window.scrollTo(0, c.getBoundingClientRect().top + window.pageYOffset);
+  });
+
+  /* ---------- ritual bag & toast notifications ---------- */
+  var bagCount = document.getElementById('bagCount');
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  var itemsCount = 0;
+
+  function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.innerHTML = '<span class="toast-dot"></span>' + msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('show');
+    }, 3200);
+  }
+
+  document.querySelectorAll('.card-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.card');
+      var name = (card && card.querySelector('.card-name')) ? card.querySelector('.card-name').textContent.trim() : 'Blend';
+      itemsCount++;
+      if (bagCount) {
+        bagCount.textContent = itemsCount;
+        bagCount.classList.add('bag-pop');
+        setTimeout(function () { bagCount.classList.remove('bag-pop'); }, 280);
+      }
+      showToast('Added <strong>' + name + '</strong> to your ritual bag');
+    });
+  });
+
+  var nlForm = document.getElementById('nlForm');
+  if (nlForm) nlForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = nlForm.querySelector('input');
+    if (input && input.value) {
+      nlForm.innerHTML = '<p class="newsletter-success">Welcome to the ceremony. Your invitation is reserved.</p>';
+    }
+  });
+
+  /* ---------- go ---------- */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
